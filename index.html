@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexusWork Pro - SiteInspire Editorial Edition</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Space Grotesk & Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Space Grotesk', 'sans-serif'],
+                    },
+                    colors: {
+                        site: {
+                            bg: '#F3F3F6',
+                            card: 'rgba(255, 255, 255, 0.85)',
+                            border: 'rgba(226, 226, 229, 0.9)',
+                            dark: '#0B0B0F',
+                            muted: '#6B6B76',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F3F3F6;
+            background-image: radial-gradient(#E2E2E8 1px, transparent 1px), radial-gradient(#E2E2E8 1px, #F3F3F6 1px);
+            background-size: 40px 40px;
+            background-position: 0 0, 20px 20px;
+            color: #0B0B0F;
+            overflow-x: hidden;
+            letter-spacing: -0.01em;
+        }
+        h1, h2, h3, h4, .font-display {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        .frosted-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(226, 226, 229, 0.9);
+            box-shadow: 0 10px 30px 0 rgba(11, 11, 15, 0.04);
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .frosted-card:hover {
+            border-color: rgba(11, 11, 15, 0.3);
+            box-shadow: 0 20px 40px -15px rgba(11, 11, 15, 0.08);
+            background: rgba(255, 255, 255, 0.98);
+        }
+        .editorial-input {
+            background: rgba(244, 244, 246, 0.8);
+            border: 1px solid rgba(226, 226, 229, 0.9);
+            color: #0B0B0F;
+            transition: all 0.2s ease;
+        }
+        .editorial-input:focus {
+            background: #FFFFFF;
+            border-color: #0B0B0F;
+            outline: none;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D0D0D5;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0B0B0F;
+        }
+    </style>
+</head>
+<body class="h-full flex flex-col justify-between min-h-screen selection:bg-site-dark selection:text-white">
+
+    <!-- Top Editorial Header -->
+    <header class="w-full border-b border-site-border bg-white/80 backdrop-blur-md sticky top-0 z-40 px-8 py-4 flex items-center justify-between shadow-sm">
+        <div class="flex items-center space-x-4">
+            <!-- Minimalist C: Logo -->
+            <div class="w-10 h-10 rounded-full bg-site-dark text-white flex items-center justify-center font-display font-bold text-sm tracking-wider shadow-md">
+                C:
+            </div>
+            <div>
+                <h1 class="font-display font-bold text-sm tracking-widest text-site-dark uppercase">NEXUSWORK PRO <span class="font-normal text-site-muted">// EDITORIAL EDITION</span></h1>
+                <p class="text-[10px] text-site-muted font-mono tracking-wider">TAIWAN PET DESIGN & WORKFLOW SUITE</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-8 text-xs text-site-muted font-medium">
+            <div class="hidden md:flex items-center space-x-2 bg-white/60 border border-site-border px-3.5 py-1.5 rounded-full font-mono text-site-dark text-[11px] shadow-sm">
+                <i class="fa-solid fa-clock text-site-dark"></i>
+                <span id="header-clock">--:--:--</span>
+            </div>
+            <a href="#section-competitors" class="hover:text-site-dark transition flex items-center space-x-1.5">
+                <i class="fa-solid fa-compass text-site-dark"></i>
+                <span>競品情報中心</span>
+            </a>
+            <a href="#section-spark" class="hover:text-site-dark transition flex items-center space-x-1.5">
+                <i class="fa-solid fa-bolt-lightning text-site-dark"></i>
+                <span>靈感寄放區</span>
+            </a>
+            <a href="#ai-tools" class="hover:text-site-dark transition flex items-center space-x-1.5">
+                <i class="fa-solid fa-wand-magic-sparkles text-site-dark"></i>
+                <span>AI 工具推薦</span>
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Editorial Workspace Grid -->
+    <main class="flex-1 max-w-[1500px] w-full mx-auto p-6 lg:p-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Left Column: Sticky Sidebar with localStorage To-Do & Sticky Notes -->
+        <section class="lg:col-span-4 flex flex-col space-y-6 sticky top-24">
+            
+            <div class="flex items-center justify-between pb-2 border-b border-site-border">
+                <h2 class="text-xs font-display font-bold tracking-widest text-site-dark uppercase flex items-center space-x-2">
+                    <i class="fa-solid fa-bolt text-site-dark"></i>
+                    <span>FLOATING WORKSPACE // 懸浮高效工作區</span>
+                </h2>
+                <span class="text-[10px] font-mono text-site-muted">Live Sync</span>
+            </div>
+
+            <!-- 1. Floating To-Do List -->
+            <div class="frosted-card rounded-2xl p-5 flex flex-col space-y-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2 text-xs font-display font-bold text-site-dark uppercase">
+                        <i class="fa-solid fa-list-check text-site-dark"></i>
+                        <span>TASK LIST 待辦清單</span>
+                    </div>
+                    <span id="todo-count" class="text-[10px] font-mono bg-white/80 px-2.5 py-1 rounded-full text-site-muted border border-site-border">0 pending</span>
+                </div>
+                <div class="flex space-x-2">
+                    <input type="text" id="todo-input" placeholder="新增待辦任務 (Enter 鍵)..." onkeypress="if(event.key==='Enter') addTodo()" class="flex-1 editorial-input rounded-xl px-4 py-2.5 text-xs placeholder-site-muted">
+                    <button onclick="addTodo()" class="bg-site-dark hover:bg-black text-white px-4 py-2.5 rounded-xl text-xs font-display font-bold transition shadow-sm"><i class="fa-solid fa-plus"></i></button>
+                </div>
+                <div id="todo-container" class="max-h-56 overflow-y-auto space-y-2 pr-1">
+                    <!-- Dynamic Todos -->
+                </div>
+            </div>
+
+            <!-- 2. Floating Sticky Notes -->
+            <div class="frosted-card rounded-2xl p-5 flex flex-col space-y-4">
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center space-x-2 text-xs font-display font-bold text-site-dark uppercase">
+                        <i class="fa-solid fa-note-sticky text-site-dark"></i>
+                        <span>QUICK NOTES 懸浮速記</span>
+                    </div>
+                    <button onclick="addNote()" class="text-[10px] font-mono text-site-dark hover:bg-site-dark hover:text-white transition px-3 py-1 rounded-md border border-site-border font-semibold flex items-center space-x-1 shadow-sm"><i class="fa-solid fa-plus"></i><span>NEW</span></button>
+                </div>
+                <div id="notes-container" class="grid grid-cols-1 gap-3 max-h-60 overflow-y-auto pr-1">
+                    <!-- Dynamic Notes -->
+                </div>
+            </div>
+
+        </section>
+
+        <!-- Right Column: Editorial Curation Feeds & Tools -->
+        <section class="lg:col-span-8 flex flex-col space-y-10">
+            
+            <!-- SECTION A: Competitor Intelligence Shortcut Center -->
+            <div id="section-competitors" class="frosted-card rounded-3xl p-8 relative overflow-hidden">
+                <div class="flex flex-col md:flex-row md:items-center justify-between pb-6 mb-6 border-b border-site-border gap-4">
+                    <div>
+                        <span class="text-[10px] font-mono text-site-muted uppercase tracking-widest block mb-1">SECTION 01 // COMPETITOR INTELLIGENCE DIRECTORY</span>
+                        <h2 class="text-xl font-display font-bold text-site-dark tracking-tight">台灣主流寵物品牌情報捷徑中心</h2>
+                    </div>
+                    <p class="text-xs text-site-muted max-w-xs">一鍵直達各大品牌官網與即時 Meta 廣告檔案庫，資訊通透永不過期。</p>
+                </div>
+
+                <!-- Competitor Brands Grid (6 Major Brands) -->
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                    
+                    <!-- 1. 汪喵星球 -->
+                    <div class="frosted-card rounded-2xl p-5 flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="font-display font-bold text-sm text-site-dark">汪喵星球 Dogetw</span>
+                                <span class="text-[10px] font-mono bg-white px-2 py-0.5 rounded text-site-muted border border-site-border">Lead Brand</span>
+                            </div>
+                            <p class="text-xs text-site-muted mb-4 leading-relaxed">主打天然無膠主食罐與凍乾零食，視覺溫暖純淨。</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 pt-3 border-t border-site-border">
+                            <a href="https://www.dogetw.com" target="_blank" class="text-center py-2 px-3 rounded-xl bg-white/80 hover:bg-site-dark hover:text-white transition text-xs font-mono font-medium border border-site-border flex items-center justify-center space-x-1.5">
+                                <i class="fa-solid fa-globe text-[10px]"></i>
+                                <span>官方網站</span>
+                            </a>
+                            <a href="https://www.facebook.com/ads/library/?active_status=all&q=%E6%B1%AA%E5%92%B5%E6%98%9F%E7%90%83" target="_blank" class="text-center py-2 px-3 rounded-xl bg-site-dark text-white hover:bg-black transition text-xs font-mono font-medium flex items-center justify-center space-x-1.5">
+                                <i class="fa-solid fa-rectangle-ad text-[10px]"></i>
+                                <span>廣告檔案庫</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 2. 阿寶寵物 -->
+                    <div class="frosted-card rounded-2xl p-5 flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="font-display font-bold text-sm text-site-dark">阿寶寵物 Abao</span>
+                                <span class="text-[10px] font-mono bg-white px-2 py-0.5 rounded text-site-muted border border-site-border">Popular</span>
+                            </div>
+                            <p class="text-xs text-site-muted mb-4 leading-relaxed">深耕台灣多年，以高性價比機能飼料與零食聞名。</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 pt-3 border-t border-site-border">
+                            <a href="https://www.abaopet.com.tw" target="_blank" class="text-center py-2 px-3 rounded-xl bg-white/80 hover:bg-site-dark hover:text-white transition text-xs font-mono font-medium border border-site-border flex items-center justify-center space-x-1.5">
+                                <i class="fa-solid fa-globe text-[10px]"></i>
+                                <span>官方網站</span>
+                            </a>
+                            <a href="https://www.facebook.com/ads/library/?active_status=all&q=%E9%98%BF%E5%AF%B6%E5%AF%B6%E7%89%A9" target="_blank" class="text-center py-2 px-3 rounded-xl bg-site-dark text-white hover:bg-black transition text-xs font-mono font-medium flex items-center justify-center space-x-1.5">
+                                <i class="fa-solid fa-rectangle-ad text-[10px]"></i>
+                                <span>廣告檔案庫</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 3. 肉球世界 -->
+                    <div class="frosted-card rounded-2xl p-5 flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="font-display font-bold text-sm text-site-dark">肉球世界 Meow</span>
+                                <span class="text-[10px] font-mono bg-white px-2 py-0.5 rounded text-site-muted border border-site-border">Innovator</span>
+                            </div>
+                            <p class="text-xs text-site-muted mb-4 leading-relaxed">專注高階貓用智能用品與質感貓砂，排版極具現代感。</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 pt-3 border-t border-site-border">
+                            <a href="https://www.meowworld.com.tw" target="_blank" class="text-center py-2 px-3 rounded-xl bg-white/80 hover:bg-site-dark hover:text-white transition text-xs font-mono font-medium border border-site-border flex items-center justify-center space-x-1.5">
+                                <i class="fa-solid fa-globe text-[10px]"></i>
+                                <span>官方網站</span>
+                            </a>
+                            <a href="https://www.facebook.com/ads/library/?active_status=all&q=%E8%82%89%E7%90%83%E4%B8%96%E7%95%8C" target="_blank" class="text-center py-2 px-3 rounded-xl bg-site-dark text-white hover:bg-black transition text-xs font-mono font-medium flex items-center justify-center space-x-1.5">
+                                <i class="fa-solid fa-rectangle-ad text-[10px]"></i>
+                                <span>廣告檔案庫</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 4. 怪獸部落 -->
+                    <div class="frosted-card rounded-2xl p-5 flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="font-display font-bold text-sm text-site-dark">怪獸部落 LitoMon</span>
+                                <span class="text-[10px] font-mono bg-white px-2 py-0.5 rounded text-site-muted border border-site-border">Scientific</span>
+                            </div>
+                            <p class="text-xs text-site-muted mb-4 leading-relaxed">訴求科學營養與專業獸醫背書，視覺俐落且具權威感。</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 pt-3 border-t border-site-border">
+                            <a href="https://www.litomon.com" target="_blank" class="text-center py-2 px-3 rounded-xl bg-white/80 hover:bg-site-dark hover:text-white transition text-xs font-mono font-medium border border-site-border flex items-center justify-center space-x-1.5">
+                                <i class="fa-solid fa-globe text-[10px]"></i>
+                                <span>官方網站</span>
+                            </a>
+                            <a href="https://www.facebook.com/ads/library/?active_status=all&q=%E6%80%AA%E7%8D%B8%E9%83%A8%E8%90%BD" target="_blank" class="text-center py-2 px-3 rounded-xl bg-site-dark text-white hover:bg-black transition text-xs font-mono font-medium flex items-center justify-center space-x-1.5">
+                                <i class="fa-solid fa-rectangle-ad text-[10px]"></i>
+                                <span>廣告檔案庫</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 5. HeroMama -->
+                    <div class="frosted-card rounded-2xl p-5 flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="font-display font-bold text-sm text-site-dark">HeroMama</span>
+                                <span class="text-[10px] font-mono bg-white px-2 py-0.5 rounded text-site-muted border border-site-border">Lifestyle</span>
+                            </div>
+                            <p class="text-xs text-site-muted mb-4 leading-relaxed">主打益生菌機能糧，社群圖文色彩明亮、質感細緻。</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 pt-3 border-t border-site-border">
+                            <a href="https://www.heromama.com.tw" target="_blank" class="text-center py-2 px-3 rounded-xl bg-white/80 hover:bg-site-dark hover:text-white transition text-xs font-mono font-medium border border-site-border flex items-center justify-center space-x-1.5">
+                                <i class="fa-solid fa-globe text-[10px]"></i>
+                                <span>官方網站</span>
+                            </a>
+                            <a href="https://www.facebook.com/ads/library/?active_status=all&q=HeroMama" target="_blank" class="text-center py-2 px-3 rounded-xl bg-site-dark text-white hover:bg-black transition text-xs font-mono font-medium flex items-center justify-center space-x-1.5">
+                                <i class="fa-solid fa-rectangle-ad text-[10px]"></i>
+                                <span>廣告檔案庫</span>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 6. 毛起來 -->
+                    <div class="frosted-card rounded-2xl p-5 flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="font-display font-bold text-sm text-site-dark">毛起來 UpCaring</span>
+                                <span class="text-[10px] font-mono bg-white px-2 py-0.5 rounded text-site-muted border border-site-border">Care & Groom</span>
+                            </div>
+                            <p class="text-xs text-site-muted mb-4 leading-relaxed">以寵物清潔護理與保健品聞名，插畫風格極具親和力。</p>
+                        </div>
+                        <div class="grid grid-cols-2 gap-2 pt-3 border-t border-site-border">
+                            <a href="https://www.upcaring.com.tw" target="_blank" class="text-center py-2 px-3 rounded-xl bg-white/80 hover:bg-site-dark hover:text-white transition text-xs font-mono font-medium border border-site-border flex items-center justify-center space-x-1.5">
+                                <i class="fa-solid fa-globe text-[10px]"></i>
+                                <span>官方網站</span>
+                            </a>
+                            <a href="https://www.facebook.com/ads/library/?active_status=all&q=%E6%AF%9B%E8%B5%B7%E4%BE%86" target="_blank" class="text-center py-2 px-3 rounded-xl bg-site-dark text-white hover:bg-black transition text-xs font-mono font-medium flex items-center justify-center space-x-1.5">
+                                <i class="fa-solid fa-rectangle-ad text-[10px]"></i>
+                                <span>廣告檔案庫</span>
+                            </a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- SECTION B: Flash Spark Box (靈感閃現寄放區) -->
+            <div id="section-spark" class="frosted-card rounded-3xl p-8 relative overflow-hidden">
+                <div class="flex flex-col md:flex-row md:items-center justify-between pb-6 mb-6 border-b border-site-border gap-4">
+                    <div>
+                        <span class="text-[10px] font-mono text-site-muted uppercase tracking-widest block mb-1">SECTION 02 // FLASH SPARK BOX</span>
+                        <h2 class="text-xl font-display font-bold text-site-dark tracking-tight">💡 靈感閃現寄放區</h2>
+                    </div>
+                    <p class="text-xs text-site-muted max-w-xs">隨時捕捉腦中雜亂碎片：社群、影片、官網或展場點子，極速封存。</p>
+                </div>
+
+                <!-- Quick Capture Form -->
+                <div class="bg-white/70 border border-site-border rounded-2xl p-5 mb-6 space-y-4 shadow-2xs">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+                        <input type="text" id="spark-title" placeholder="靈感標題 (例如: 三創快閃店通透感動線)..." class="editorial-input rounded-xl px-4 py-2.5 text-xs">
+                        <input type="text" id="spark-url" placeholder="參考網址 (選填: https://...)" class="editorial-input rounded-xl px-4 py-2.5 text-xs">
+                    </div>
+                    <textarea id="spark-note" placeholder="詳細備註或心得碎碎念..." class="w-full editorial-input rounded-xl px-4 py-2.5 text-xs h-20 resize-none"></textarea>
+                    
+                    <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 pt-2 border-t border-site-border">
+                        <div class="flex items-center space-x-2 flex-wrap gap-y-2">
+                            <span class="text-[11px] font-mono text-site-muted">選擇標籤：</span>
+                            <label class="cursor-pointer text-xs font-mono px-3 py-1 rounded-lg bg-white border border-site-border hover:border-site-dark transition select-none">
+                                <input type="radio" name="spark-tag" value="社群貼文" checked class="accent-site-dark mr-1">社群貼文
+                            </label>
+                            <label class="cursor-pointer text-xs font-mono px-3 py-1 rounded-lg bg-white border border-site-border hover:border-site-dark transition select-none">
+                                <input type="radio" name="spark-tag" value="動態影片" class="accent-site-dark mr-1">動態影片
+                            </label>
+                            <label class="cursor-pointer text-xs font-mono px-3 py-1 rounded-lg bg-white border border-site-border hover:border-site-dark transition select-none">
+                                <input type="radio" name="spark-tag" value="官網體驗" class="accent-site-dark mr-1">官網體驗
+                            </label>
+                            <label class="cursor-pointer text-xs font-mono px-3 py-1 rounded-lg bg-white border border-site-border hover:border-site-dark transition select-none">
+                                <input type="radio" name="spark-tag" value="展場空間" class="accent-site-dark mr-1">展場空間
+                            </label>
+                            <label class="cursor-pointer text-xs font-mono px-3 py-1 rounded-lg bg-white border border-site-border hover:border-site-dark transition select-none">
+                                <input type="radio" name="spark-tag" value="靈感碎念" class="accent-site-dark mr-1">靈感碎念
+                            </label>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                            <label class="cursor-pointer bg-white hover:bg-white/90 text-site-dark px-3.5 py-2 rounded-xl text-xs font-mono border border-site-border flex items-center space-x-1.5 transition shadow-2xs">
+                                <i class="fa-solid fa-camera text-site-dark text-xs"></i>
+                                <span id="file-label">上傳圖片</span>
+                                <input type="file" id="spark-file" accept="image/*" class="hidden" onchange="handleImageUpload(event)">
+                            </label>
+                            <button onclick="addSpark()" class="bg-site-dark hover:bg-black text-white px-5 py-2 rounded-xl text-xs font-display font-bold transition shadow-sm flex items-center space-x-1.5">
+                                <i class="fa-solid fa-paper-plane text-[10px]"></i>
+                                <span>立即寄放</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category Filtering Tabs -->
+                <div class="flex items-center justify-between pb-4 mb-4 border-b border-site-border flex-wrap gap-2">
+                    <div class="flex items-center space-x-1.5 text-xs font-mono overflow-x-auto no-scrollbar">
+                        <button onclick="filterSparks('all')" class="spark-filter-btn px-3 py-1.5 rounded-lg bg-site-dark text-white font-bold transition shadow-sm">全部靈感</button>
+                        <button onclick="filterSparks('社群貼文')" class="spark-filter-btn px-3 py-1.5 rounded-lg bg-white/70 hover:bg-white text-site-muted transition border border-site-border">社群貼文</button>
+                        <button onclick="filterSparks('動態影片')" class="spark-filter-btn px-3 py-1.5 rounded-lg bg-white/70 hover:bg-white text-site-muted transition border border-site-border">動態影片</button>
+                        <button onclick="filterSparks('官網體驗')" class="spark-filter-btn px-3 py-1.5 rounded-lg bg-white/70 hover:bg-white text-site-muted transition border border-site-border">官網體驗</button>
+                        <button onclick="filterSparks('展場空間')" class="spark-filter-btn px-3 py-1.5 rounded-lg bg-white/70 hover:bg-white text-site-muted transition border border-site-border">展場空間</button>
+                        <button onclick="filterSparks('靈感碎念')" class="spark-filter-btn px-3 py-1.5 rounded-lg bg-white/70 hover:bg-white text-site-muted transition border border-site-border">靈感碎念</button>
+                    </div>
+                    <span id="spark-count" class="text-xs font-mono text-site-muted">0 items</span>
+                </div>
+
+                <!-- Sparks Grid (Masonry Style Cards) -->
+                <div id="sparks-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Dynamic Spark Cards -->
+                </div>
+            </div>
+
+            <!-- SECTION C: AI Design Tools Directory -->
+            <div id="ai-tools" class="frosted-card rounded-3xl p-8 relative overflow-hidden">
+                <div class="flex flex-col md:flex-row md:items-center justify-between pb-6 mb-6 border-b border-site-border gap-4">
+                    <div>
+                        <span class="text-[10px] font-mono text-site-muted uppercase tracking-widest block mb-1">SECTION 03 // AI DESIGN DIRECTORY</span>
+                        <h2 class="text-xl font-display font-bold text-site-dark tracking-tight">AI 設計與美編工具推薦助手</h2>
+                    </div>
+                    <div class="relative w-full md:w-64">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-site-muted text-xs"></i>
+                        <input type="text" id="ai-search" oninput="filterAiTools()" placeholder="搜尋 AI 工具..." class="w-full editorial-input rounded-xl pl-9 pr-4 py-2 text-xs">
+                    </div>
+                </div>
+
+                <div id="ai-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <!-- Dynamic AI Tools -->
+                </div>
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full border-t border-site-border py-6 text-center text-xs text-site-muted font-mono bg-white/50 backdrop-blur-sm mt-12">
+        <p>NEXUSWORK PRO // SITEINSPIRE EDITORIAL EDITION &copy; 2026. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+    <!-- Application Script -->
+    <script>
+        // --- Clock ---
+        function updateClock() {
+            const now = new Date();
+            const h = now.getHours().toString().padStart(2, '0');
+            const m = now.getMinutes().toString().padStart(2, '0');
+            const s = now.getSeconds().toString().padStart(2, '0');
+            document.getElementById('header-clock').innerText = `${h}:${m}:${s}`;
+        }
+        setInterval(updateClock, 1000);
+        updateClock();
+
+        // --- 1. To-Do List (localStorage) ---
+        let todos = JSON.parse(localStorage.getItem('nexus_todos')) || [
+            { id: 1, text: '分析怪獸部落與汪喵星球視覺差異', completed: true },
+            { id: 2, text: '蒐集 HeroMama 限動廣告版型', completed: false }
+        ];
+
+        function saveTodos() {
+            localStorage.setItem('nexus_todos', JSON.stringify(todos));
+        }
+
+        function renderTodos() {
+            const container = document.getElementById('todo-container');
+            container.innerHTML = '';
+            const pendingCount = todos.filter(t => !t.completed).length;
+            document.getElementById('todo-count').innerText = `${pendingCount} pending`;
+
+            if (todos.length === 0) {
+                container.innerHTML = `<div class="text-center py-4 text-xs text-site-muted font-mono">暫無待辦事項</div>`;
+                return;
+            }
+
+            todos.forEach(todo => {
+                container.innerHTML += `
+                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-white/60 border border-site-border hover:border-site-dark transition">
+                        <div class="flex items-center space-x-2.5 flex-1">
+                            <input type="checkbox" ${todo.completed ? 'checked' : ''} onclick="toggleTodo(${todo.id})" class="w-4 h-4 accent-site-dark rounded cursor-pointer">
+                            <span class="text-xs ${todo.completed ? 'line-through text-site-muted' : 'text-site-dark'}">${todo.text}</span>
+                        </div>
+                        <button onclick="deleteTodo(${todo.id})" class="text-site-muted hover:text-site-dark p-1 transition"><i class="fa-solid fa-xmark text-xs"></i></button>
+                    </div>
+                `;
+            });
+        }
+
+        function addTodo() {
+            const input = document.getElementById('todo-input');
+            const val = input.value.trim();
+            if (!val) return;
+            todos.push({ id: Date.now(), text: val, completed: false });
+            input.value = '';
+            saveTodos();
+            renderTodos();
+        }
+
+        function toggleTodo(id) {
+            todos = todos.map(t => t.id === id ? { ...t, completed: !t.completed } : t);
+            saveTodos();
+            renderTodos();
+        }
+
+        function deleteTodo(id) {
+            todos = todos.filter(t => t.id !== id);
+            saveTodos();
+            renderTodos();
+        }
+
+        renderTodos();
+
+        // --- 2. Sticky Notes (localStorage) ---
+        let notes = JSON.parse(localStorage.getItem('nexus_notes')) || [
+            { id: 1, text: '怪獸部落：科學營養與專業醫療感，字體俐落。' },
+            { id: 2, text: '肉球世界：高階智能貓砂盆，版面極具現代感。' }
+        ];
+
+        function saveNotes() {
+            localStorage.setItem('nexus_notes', JSON.stringify(notes));
+        }
+
+        function renderNotes() {
+            const container = document.getElementById('notes-container');
+            container.innerHTML = '';
+            notes.forEach(note => {
+                container.innerHTML += `
+                    <div class="bg-white/60 text-site-dark p-3.5 rounded-2xl border border-site-border flex flex-col justify-between relative group min-h-[90px] shadow-2xs">
+                        <textarea oninput="updateNote(${note.id}, this.value)" class="w-full h-full bg-transparent resize-none focus:outline-none text-xs font-mono text-site-muted">${note.text}</textarea>
+                        <button onclick="deleteNote(${note.id})" class="absolute top-2 right-2 text-site-muted hover:text-site-dark transition opacity-0 group-hover:opacity-100"><i class="fa-solid fa-xmark text-xs"></i></button>
+                    </div>
+                `;
+            });
+        }
+
+        function addNote() {
+            notes.push({ id: Date.now(), text: '// 新增速記靈感...' });
+            saveNotes();
+            renderNotes();
+        }
+
+        function updateNote(id, text) {
+            notes = notes.map(n => n.id === id ? { ...n, text } : n);
+            saveNotes();
+        }
+
+        function deleteNote(id) {
+            notes = notes.filter(n => n.id !== id);
+            saveNotes();
+            renderNotes();
+        }
+
+        renderNotes();
+
+        // --- 3. Flash Spark Box (靈感閃現寄放區 - Base64 localStorage) ---
+        let uploadedImageBase64 = '';
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            document.getElementById('file-label').innerText = file.name;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                uploadedImageBase64 = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        let sparks = JSON.parse(localStorage.getItem('nexus_sparks')) || [
+            { id: 101, title: '三創快閃店通透動線', tag: '展場空間', note: '進場左側的燈箱效果與極簡展示架。', url: 'https://www.behance.net', image: '' }
+        ];
+
+        function saveSparks() {
+            localStorage.setItem('nexus_sparks', JSON.stringify(sparks));
+        }
+
+        let currentSparkFilter = 'all';
+
+        function renderSparks() {
+            const container = document.getElementById('sparks-grid');
+            container.innerHTML = '';
+            
+            const filtered = currentSparkFilter === 'all' ? sparks : sparks.filter(s => s.tag === currentSparkFilter);
+            document.getElementById('spark-count').innerText = `${filtered.length} items`;
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="col-span-2 text-center py-8 text-xs text-site-muted font-mono">尚無此分類的靈感紀錄</div>`;
+                return;
+            }
+
+            filtered.forEach(spark => {
+                let imgHtml = spark.image ? `<div class="mb-3 rounded-xl overflow-hidden h-36 bg-site-bg border border-site-border"><img src="${spark.image}" class="w-full h-full object-cover"></div>` : '';
+                let urlHtml = spark.url ? `<a href="${spark.url}" target="_blank" class="text-[11px] text-site-dark hover:underline flex items-center space-x-1 mt-2 font-mono truncate"><i class="fa-solid fa-link text-[10px]"></i><span>${spark.url}</span></a>` : '';
+                
+                container.innerHTML += `
+                    <div class="frosted-card rounded-2xl p-4 flex flex-col justify-between relative group">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-[10px] font-mono bg-white px-2.5 py-0.5 rounded text-site-muted border border-site-border">${spark.tag}</span>
+                                <button onclick="deleteSpark(${spark.id})" class="text-site-muted hover:text-site-dark transition"><i class="fa-solid fa-xmark text-xs"></i></button>
+                            </div>
+                            ${imgHtml}
+                            <h3 class="font-display font-bold text-sm text-site-dark mb-1">${spark.title}</h3>
+                            <p class="text-xs text-site-muted leading-relaxed">${spark.note || '（無詳細備註）'}</p>
+                            ${urlHtml}
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function addSpark() {
+            const title = document.getElementById('spark-title').value.trim();
+            const note = document.getElementById('spark-note').value.trim();
+            const url = document.getElementById('spark-url').value.trim();
+            const tagRadio = document.querySelector('input[name="spark-tag"]:checked');
+            const tag = tagRadio ? tagRadio.value : '靈感碎念';
+
+            if (!title) {
+                alert('請至少輸入靈感標題！');
+                return;
+            }
+
+            sparks.unshift({
+                id: Date.now(),
+                title,
+                note,
+                url,
+                tag,
+                image: uploadedImageBase64
+            });
+
+            // Reset Form
+            document.getElementById('spark-title').value = '';
+            document.getElementById('spark-note').value = '';
+            document.getElementById('spark-url').value = '';
+            document.getElementById('spark-file').value = '';
+            document.getElementById('file-label').innerText = '上傳圖片';
+            uploadedImageBase64 = '';
+
+            saveSparks();
+            renderSparks();
+        }
+
+        function deleteSpark(id) {
+            sparks = sparks.filter(s => s.id !== id);
+            saveSparks();
+            renderSparks();
+        }
+
+        function filterSparks(tag) {
+            currentSparkFilter = tag;
+            document.querySelectorAll('.spark-filter-btn').forEach(btn => {
+                btn.className = "spark-filter-btn px-3 py-1.5 rounded-lg bg-white/70 hover:bg-white text-site-muted transition border border-site-border font-mono";
+            });
+            event.target.className = "spark-filter-btn px-3 py-1.5 rounded-lg bg-site-dark text-white font-bold transition shadow-sm font-mono";
+            renderSparks();
+        }
+
+        renderSparks();
+
+        // --- 4. AI Design Tools Directory ---
+        const aiToolsData = [
+            { name: "Coolors", category: "配色", desc: "超快速調色盤生成器，適用於寵物品牌質感色調搭配。", url: "https://coolors.co", status: "Freemium" },
+            { name: "Adobe Color", category: "配色", desc: "專業色輪工具，支援上傳寵物圖檔一鍵擷取色票。", url: "https://color.adobe.com", status: "Free" },
+            { name: "Google Fonts", category: "字體", desc: "開源字體庫，提供清晰無襯線字體預覽與排版。", url: "https://fonts.google.com", status: "Free" },
+            { name: "Canva", category: "Banner", desc: "線上 Banner 與行銷圖排版神器，內建大量模板。", url: "https://www.canva.com", status: "Freemium" },
+            { name: "Remove.bg", category: "AI 去背", desc: "AI 自動智慧去背，完美處理貓狗毛髮邊緣。", url: "https://www.remove.bg", status: "Freemium" },
+            { name: "Midjourney", category: "AI 繪圖", desc: "頂尖 AI 圖像生成模型，為寵物概念視覺提供靈感。", url: "https://www.midjourney.com", status: "Paid" }
+        ];
+
+        function renderAiTools(tools = aiToolsData) {
+            const grid = document.getElementById('ai-grid');
+            grid.innerHTML = '';
+            tools.forEach(tool => {
+                grid.innerHTML += `
+                    <div class="frosted-card rounded-2xl p-4 flex flex-col justify-between group">
+                        <div>
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="font-display font-bold text-xs text-site-dark">${tool.name}</span>
+                                <span class="text-[10px] font-mono px-2 py-0.5 rounded bg-white border border-site-border text-site-muted">${tool.status}</span>
+                            </div>
+                            <p class="text-xs text-site-muted leading-relaxed">${tool.desc}</p>
+                        </div>
+                        <div class="mt-4 pt-3 border-t border-site-border flex justify-end">
+                            <a href="${tool.url}" target="_blank" class="text-xs font-mono text-site-dark hover:underline flex items-center space-x-1">
+                                <span>LAUNCH</span>
+                                <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                            </a>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function filterAiTools() {
+            const query = document.getElementById('ai-search').value.toLowerCase();
+            const filtered = aiToolsData.filter(t => t.name.toLowerCase().includes(query) || t.desc.toLowerCase().includes(query) || t.category.toLowerCase().includes(query));
+            renderAiTools(filtered);
+        }
+
+        renderAiTools();
+    </script>
+</body>
+</html>
